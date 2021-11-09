@@ -127,8 +127,6 @@ void process_serial_data(uint8_t ch)
 
 	        case 'F':
 	        	if(count==4){count=5;}
-	        	else{count=0;}
-
 	      	    if(count==5){count=0;
 				LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);}
 	        	else{count=0;}
