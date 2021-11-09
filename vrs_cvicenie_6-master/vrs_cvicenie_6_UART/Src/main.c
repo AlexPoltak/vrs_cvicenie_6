@@ -47,8 +47,8 @@ int main(void)
 
   while (1)
   {
-	  LL_USART_TransmitData8(USART2, tx_data++);
-	  tx_data == ('z' + 1) ? tx_data = 'a' : tx_data;
+	  /*LL_USART_TransmitData8(USART2, tx_data++);
+	  tx_data == ('z' + 1) ? tx_data = 'a' : tx_data;*/
 
 	  LL_mDelay(50);
   }
@@ -93,6 +93,48 @@ void SystemClock_Config(void)
 void process_serial_data(uint8_t ch)
 {
 	static uint8_t count = 0;
+
+	switch(ch)
+	    {
+	        case 'l':
+	        	count=1;
+	            break;
+
+	        case 'e':
+	        	if(count==1){count=2;}
+	        	else{count=0;}
+	            break;
+	        case 'd':
+	        	if(count==2){count=3;}
+	        	else{count=0;}
+	        	break;
+	        case 'O':
+	        	if(count==3){count=4;}
+	        	else{count=0;}
+	        	break;
+	        case 'N':
+	        	if(count==4){count=0;
+				LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);}
+	        	else{count=0;}
+	        	break;
+
+	        case 'F':
+	        	if(count==4){count=5;}
+	        	else{count=0;}
+	        	break;
+	        case 'F':
+	      	    if(count==5){count=0;
+				LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);}
+	        	else{count=0;}
+	      	    break;
+
+
+
+	        // operator doesn't match any case constant +, -, *, /
+	        default:
+	            printf("Error! operator is not correct");
+	    }
+
 
 	if(ch == 'a')
 	{
