@@ -147,26 +147,6 @@ void process_serial_data(uint8_t ch)
 	        // operator doesn't match any case constant +, -, *, /
 	        default:count=4;	    }
 
-
-	if(ch == 'a')
-	{
-		count++;
-
-		if(count >= 3)
-		{
-			if((LL_GPIO_ReadInputPort(GPIOB) & (1 << 3)) >> 3)
-			{
-				LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
-			}
-			else
-			{
-				LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);
-			}
-
-			count = 0;
-			return;
-		}
-	}
 }
 
 
