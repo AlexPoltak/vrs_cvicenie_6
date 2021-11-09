@@ -22,6 +22,7 @@
 #include "main.h"
 #include "usart.h"
 #include "gpio.h"
+#include <string.h>
 
 
 void SystemClock_Config(void);
@@ -42,16 +43,19 @@ int main(void)
   MX_USART2_UART_Init();
 
   USART2_RegisterCallback(process_serial_data);
-
-  char tx_data = '';
+  char tx_dataOFF[]="ledOFF";
+  char tx_dataON[]="ledON";
 
   while (1)
   {
-	 if(!LL_GPIO_IsOutputPinSet(GPIOB, LL_GPIO_PIN_3))
-	 {tx_data='ledOFF';}
-	 else
-	 {tx_data='ledON';}
-	 LL_USART_TransmitData8(USART2, tx_data);
+	 if(!LL_GPIO_IsOutputPinSet(GPIOB, LL_GPIO_PIN_3)){
+		 for(int i=0;i<strlen(tx_dataOFF);i++){
+		 LL_USART_TransmitData8(USART2, tx_dataOFF[i]);}
+	 }
+	 else{
+		 for(int i=0;i<strlen(tx_dataON);i++){
+		 LL_USART_TransmitData8(USART2, tx_dataON[i]);}
+	 }
 	 LL_mDelay(5000);
 
   }
@@ -124,8 +128,7 @@ void process_serial_data(uint8_t ch)
 	        case 'F':
 	        	if(count==4){count=5;}
 	        	else{count=0;}
-	        	break;
-	        case 'F':
+
 	      	    if(count==5){count=0;
 				LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);}
 	        	else{count=0;}
@@ -134,9 +137,7 @@ void process_serial_data(uint8_t ch)
 
 
 	        // operator doesn't match any case constant +, -, *, /
-	        default:
-	            printf("Error! operator is not correct");
-	    }
+	        default:count=4;	    }
 
 
 	if(ch == 'a')
