@@ -53,8 +53,8 @@ int main(void)
 	           LL_mDelay(50);
 	           i = i+1;
 	           if(i == 6){
-	                   i = 0;
-	                   LL_mDelay(5000);
+	              i = 0;
+	              LL_mDelay(5000);
 	           }
 	      }
 	       else{
@@ -62,8 +62,8 @@ int main(void)
 	           LL_mDelay(50);
 	           i = i+1;
 	           if(i == 5){
-	               i = 0;
-	               LL_mDelay(5000);
+	              i = 0;
+	              LL_mDelay(5000);
 	           }
 	       }
 	    }
@@ -142,10 +142,8 @@ void process_serial_data(uint8_t ch)
 	        	else{count=0;}
 	      	    break;
 
-
-
 	        // operator doesn't match any case constant +, -, *, /
-	        default:count=4;	    }
+	        default:count=0;    }
 
 }
 
