@@ -43,23 +43,33 @@ int main(void)
   MX_USART2_UART_Init();
 
   USART2_RegisterCallback(process_serial_data);
-  char tx_dataOFF[]="ledOFF";
-  char tx_dataON[]="ledON";
-
+  char tx_dataOFF[]={'l','e','d','O','F','F'};
+  char tx_dataON[]={'l','e','d','O','N'};
+  int i = 0;
   while (1)
-  {
-	 if(!LL_GPIO_IsOutputPinSet(GPIOB, LL_GPIO_PIN_3)){
-		 for(int i=0;i<strlen(tx_dataOFF);i++){
-		 LL_USART_TransmitData8(USART2, tx_dataOFF[i]);}
-	 }
-	 else{
-		 for(int i=0;i<strlen(tx_dataON);i++){
-		 LL_USART_TransmitData8(USART2, tx_dataON[i]);}
-	 }
-	 LL_mDelay(5000);
+	    {
+	       if(!LL_GPIO_IsOutputPinSet(GPIOB, LL_GPIO_PIN_3)){
+	           LL_USART_TransmitData8(USART2, tx_dataOFF[i]);
+	           LL_mDelay(50);
+	           i = i+1;
+	           if(i == 6){
+	                   i = 0;
+	                   LL_mDelay(5000);
+	           }
+	      }
+	       else{
+	           LL_USART_TransmitData8(USART2, tx_dataON[i]);
+	           LL_mDelay(50);
+	           i = i+1;
+	           if(i == 5){
+	               i = 0;
+	               LL_mDelay(5000);
+	           }
+	       }
+	    }
 
   }
-}
+
 
 /**
   * @brief System Clock Configuration
