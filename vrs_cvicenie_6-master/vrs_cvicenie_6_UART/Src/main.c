@@ -43,14 +43,17 @@ int main(void)
 
   USART2_RegisterCallback(process_serial_data);
 
-  char tx_data = 'a';
+  char tx_data = '';
 
   while (1)
   {
-	  /*LL_USART_TransmitData8(USART2, tx_data++);
-	  tx_data == ('z' + 1) ? tx_data = 'a' : tx_data;*/
+	 if(!LL_GPIO_IsOutputPinSet(GPIOB, LL_GPIO_PIN_3))
+	 {tx_data='ledOFF';}
+	 else
+	 {tx_data='ledON';}
+	 LL_USART_TransmitData8(USART2, tx_data);
+	 LL_mDelay(5000);
 
-	  LL_mDelay(50);
   }
 }
 
