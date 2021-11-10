@@ -45,6 +45,7 @@ int main(void)
   USART2_RegisterCallback(process_serial_data);
   char tx_dataOFF[]={'l','e','d','O','F','F'};
   char tx_dataON[]={'l','e','d','O','N'};
+  char m=' ';
   int i = 0;
   while (1)
 	    {
@@ -54,6 +55,7 @@ int main(void)
 	           i = i+1;
 	           if(i == 6){
 	              i = 0;
+		          LL_USART_TransmitData8(USART2, m);
 	              LL_mDelay(5000);
 	           }
 	      }
@@ -63,6 +65,7 @@ int main(void)
 	           i = i+1;
 	           if(i == 5){
 	              i = 0;
+		          LL_USART_TransmitData8(USART2, m);
 	              LL_mDelay(5000);
 	           }
 	       }
